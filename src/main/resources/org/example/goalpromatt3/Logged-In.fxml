@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.LoggedInController">
+   <children>
+      <AnchorPane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: #16c444;">
+         <children>
+            <Button fx:id="button_logout" layoutX="525.0" layoutY="12.0" mnemonicParsing="false" text="Log out">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="button_athletes" layoutX="401.0" layoutY="11.0" mnemonicParsing="false" text="Athletes" />
+            <Button fx:id="button_schedules" layoutX="265.0" layoutY="11.0" mnemonicParsing="false" text="Schedules" />
+            <Button fx:id="button_home" layoutX="20.0" layoutY="11.0" mnemonicParsing="false" text="Home" />
+            <Button fx:id="button_exercises" layoutX="133.0" layoutY="11.0" mnemonicParsing="false" text="Exercises" />
+         </children></AnchorPane>
+      <AnchorPane prefHeight="359.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="button_send" layoutX="254.0" layoutY="124.0" mnemonicParsing="false" text="Send Exercises" />
+            <Button fx:id="button_edit" layoutX="263.0" layoutY="194.0" mnemonicParsing="false" text="Edit Profile" />
+         </children></AnchorPane>
+   </children>
+</VBox>

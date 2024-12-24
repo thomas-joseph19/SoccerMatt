@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.athletefinderController">
+   <children>
+      <Label layoutX="172.0" layoutY="77.0" text="Type in the name of the athlete you want to edit" />
+      <TextField fx:id="tf_firstname" layoutX="226.0" layoutY="114.0" promptText="First Name" />
+      <TextField fx:id="tf_lastname" layoutX="226.0" layoutY="154.0" promptText="Last Name" />
+      <Button fx:id="button_find" layoutX="275.0" layoutY="188.0" mnemonicParsing="false" text="Find" />
+      <Button fx:id="button_back" layoutX="275.0" layoutY="240.0" mnemonicParsing="false" text="Back" />
+   </children>
+</AnchorPane>

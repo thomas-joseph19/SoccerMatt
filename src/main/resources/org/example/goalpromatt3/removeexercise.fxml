@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.goalpromatt3.removeExerciseController"
+            prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.6">
+
+    <!-- Label for Exercise Name -->
+    <Label text="Exercise Name:" layoutX="150.0" layoutY="80.0"/>
+
+    <!-- TextField for inputting Exercise Name -->
+    <TextField fx:id="tf_exerciseName" layoutX="250.0" layoutY="75.0" promptText="Enter exercise name"/>
+
+    <!-- Remove Exercise Button -->
+    <Button fx:id="button_remove" layoutX="250.0" layoutY="150.0" mnemonicParsing="false" text="Remove Exercise" />
+
+    <!-- Cancel Button -->
+    <Button fx:id="button_cancel" layoutX="150.0" layoutY="150.0" mnemonicParsing="false" text="Cancel" />
+
+</AnchorPane>

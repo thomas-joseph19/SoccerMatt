@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.addPracticeorGameController">
+   <children>
+      <DatePicker fx:id="dp_date" layoutX="212.0" layoutY="32.0" prefHeight="18.0" prefWidth="175.0" promptText="Date" />
+      <ComboBox fx:id="startTimeComboBox" layoutX="99.0" layoutY="112.0" prefHeight="26.0" prefWidth="99.0" />
+      <ComboBox fx:id="endTimeComboBox" layoutX="393.0" layoutY="112.0" prefHeight="26.0" prefWidth="120.0" />
+      <RadioButton fx:id="rb_practice" layoutX="268.0" layoutY="174.0" mnemonicParsing="false" text="Practice" />
+      <RadioButton fx:id="rb_game" layoutX="272.0" layoutY="243.0" mnemonicParsing="false" text="Game" />
+      <Button fx:id="button_add" layoutX="130.0" layoutY="338.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="button_cancel" layoutX="402.0" layoutY="338.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="122.0" layoutY="84.0" text="Start Time" />
+      <Label layoutX="426.0" layoutY="84.0" text="End Time" />
+   </children>
+</AnchorPane>

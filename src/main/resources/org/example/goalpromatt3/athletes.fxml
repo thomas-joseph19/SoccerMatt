@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.AthletesController">
+    <children>
+        <AnchorPane prefHeight="59.0" prefWidth="600.0" style="-fx-background-color: #16c444;">
+            <children>
+                <Button fx:id="button_logout" layoutX="525.0" layoutY="12.0" mnemonicParsing="false" text="Log out">
+                    <font>
+                        <Font name="Century Gothic" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="button_athletes" layoutX="401.0" layoutY="11.0" mnemonicParsing="false" text="Athletes" />
+                <Button fx:id="button_schedules" layoutX="265.0" layoutY="11.0" mnemonicParsing="false" text="Schedules" />
+                <Button fx:id="button_home" layoutX="20.0" layoutY="11.0" mnemonicParsing="false" text="Home" />
+                <Button fx:id="button_exercises" layoutX="133.0" layoutY="11.0" mnemonicParsing="false" text="Exercises" />
+            </children>
+        </AnchorPane>
+        <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="355.0" prefWidth="600.0" vbarPolicy="AS_NEEDED">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="43.0" prefWidth="600.0">
+                    <children>
+                        <TableView fx:id="athletesTable" layoutX="0.0" layoutY="42.0" prefHeight="300.0" prefWidth="600.0">
+                            <columns>
+                                <TableColumn fx:id="firstNameColumn" prefWidth="98.0" text="First Name" />
+                                <TableColumn fx:id="lastNameColumn" prefWidth="77.0" text="Last Name" />
+                                <TableColumn fx:id="skillColumn" prefWidth="49.4" text="Skill" />
+                                <TableColumn fx:id="parentFirstNameColumn" prefWidth="169.8" text="Parent First Name" />
+                                <TableColumn fx:id="parentLastNameColumn" prefWidth="146.4" text="Parent Last Name" />
+                                <TableColumn fx:id="emailColumn" minWidth="6.0" prefWidth="150.0" text="Email" />
+                                <TableColumn fx:id="phoneNumberColumn" minWidth="0.0" prefWidth="150.0" text="Phone Number" />
+                            </columns>
+                        </TableView>
+                        <Button fx:id="button_addathlete" layoutX="21.0" layoutY="9.0" mnemonicParsing="false" text="Add Athlete" />
+                        <Button fx:id="button_editathlete" layoutX="508.0" layoutY="9.0" mnemonicParsing="false" text="Edit Athlete" />
+                  <Button fx:id="button_skillsort" layoutX="136.0" layoutY="9.0" mnemonicParsing="false" text="Sort by Skill" />
+                  <Button fx:id="button_namesort" layoutX="391.0" layoutY="9.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" text="Sort by Name" />
+                  <Button fx:id="button_remove" layoutX="250.0" layoutY="9.0" mnemonicParsing="false" text="Remove Athlete" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
+</VBox>

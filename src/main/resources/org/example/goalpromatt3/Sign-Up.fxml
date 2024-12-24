@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.SignUpController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #16c444;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@ball.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="410.0">
+         <children>
+            <ImageView fitHeight="96.0" fitWidth="99.0" layoutX="153.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="11.0" layoutY="214.0" text="Create Username">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="125.0" text="First Name">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="166.0" text="Last Name">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="251.0" text="Create Password">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="292.0" text="Email">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_firstname" layoutX="127.0" layoutY="121.0" prefHeight="26.0" prefWidth="228.0" promptText="First Name" />
+            <TextField fx:id="tf_lastname" layoutX="127.0" layoutY="162.0" prefHeight="26.0" prefWidth="228.0" promptText="Last Name" />
+            <TextField fx:id="tf_createusername" layoutX="153.0" layoutY="210.0" prefHeight="26.0" prefWidth="198.0" promptText="Create Username" />
+            <TextField fx:id="tf_createpassword" layoutX="153.0" layoutY="247.0" prefHeight="26.0" prefWidth="198.0" promptText="Create Password" />
+            <TextField fx:id="tf_email" layoutX="99.0" layoutY="289.0" prefHeight="26.0" prefWidth="251.0" promptText="Email" />
+            <Button fx:id="button_signup" layoutX="153.0" layoutY="322.0" mnemonicParsing="false" text="Sign up" />
+            <Label layoutX="37.0" layoutY="366.0" text="Already a User?">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_gotologin" layoutX="173.0" layoutY="363.0" mnemonicParsing="false" text="Log In" />
+         </children></AnchorPane>
+   </children>
+</HBox>

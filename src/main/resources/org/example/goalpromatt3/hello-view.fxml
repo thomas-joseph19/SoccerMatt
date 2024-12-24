@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.HelloController"
+      prefHeight="400.0" prefWidth="600.0">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="228.0" style="-fx-background-color: #16c444;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@ball.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="419.0">
+         <children>
+            <ImageView fitHeight="112.0" fitWidth="109.0" layoutX="143.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="25.0" layoutY="162.0" text="Username">
+               <font>
+                  <Font name="Century Gothic" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="214.0" text="Password">
+               <font>
+                  <Font name="Century Gothic" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tf_username" layoutX="150.0" layoutY="162.0" prefHeight="26.0" prefWidth="205.0" promptText="Username" />
+            <TextField fx:id="tf_password" layoutX="150.0" layoutY="213.0" prefHeight="26.0" prefWidth="205.0" promptText="Password" />
+            <Button fx:id="button_login" layoutX="151.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" text="Login" />
+            <Label layoutX="91.0" layoutY="338.0" text="New?">
+               <font>
+                  <Font name="Century Gothic" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_gotosignup" layoutX="161.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="91.0" text="Sign Up" />
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

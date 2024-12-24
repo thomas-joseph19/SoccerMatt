@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.addExerciseController">
+   <children>
+      <Button fx:id="button_cancel" layoutX="96.0" layoutY="349.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="button_add" layoutX="459.0" layoutY="349.0" mnemonicParsing="false" text="Add" />
+      <TextField fx:id="tf_exercisename" layoutX="205.0" layoutY="60.0" prefHeight="26.0" prefWidth="313.0" promptText="Exercise Name" />
+      <TextField fx:id="tf_link" layoutX="204.0" layoutY="113.0" prefHeight="26.0" prefWidth="314.0" promptText="Link" />
+      <TextField fx:id="tf_difficulty" layoutX="205.0" layoutY="164.0" prefHeight="26.0" prefWidth="88.0" promptText="Difficulty" />
+      <Label layoutX="108.0" layoutY="60.0" text="Exercise Name" />
+      <Label layoutX="50.0" layoutY="117.0" text="Exercise Link (If Applicable)" />
+      <Label layoutX="109.0" layoutY="168.0" text="Difficulty (0-5)" />
+   </children>
+</AnchorPane>

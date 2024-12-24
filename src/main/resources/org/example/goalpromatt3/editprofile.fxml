@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.editProfileController">
+   <children>
+      <Button fx:id="button_edit" layoutX="434.0" layoutY="334.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="button_cancel" layoutX="137.0" layoutY="334.0" mnemonicParsing="false" text="Cancel" />
+      <TextField fx:id="tf_firstname" layoutX="300.0" layoutY="56.0" />
+      <TextField fx:id="tf_lastname" layoutX="300.0" layoutY="135.0" />
+      <TextField fx:id="tf_email" layoutX="300.0" layoutY="221.0" />
+      <Label layoutX="137.0" layoutY="60.0" text="First name" />
+      <Label layoutX="137.0" layoutY="139.0" text="Last name" />
+      <Label layoutX="135.0" layoutY="225.0" text="Email" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="463.0" prefWidth="567.0" spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.RemovePracticeorGameController">
+
+    <!-- Label -->
+    <Label style="-fx-font-size: 16;" text="Choose Date" />
+
+    <!-- DatePicker -->
+    <DatePicker fx:id="datePicker" />
+
+    <!-- Remove Button -->
+    <Button fx:id="buttonRemove" text="Remove Practice/Game" />
+
+    <!-- Cancel Button -->
+    <Button fx:id="buttonCancel" text="Cancel" />
+</VBox>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.6" fx:controller="org.example.goalpromatt3.sendExercisesController">
+    <children>
+        <!-- Exercise selection section -->
+        <Label layoutX="20" layoutY="20" text="Select Exercise:" />
+        <ComboBox fx:id="exerciseComboBox" layoutX="20" layoutY="50" prefWidth="200" />
+
+        <!-- Athlete selection section with scrollable VBox -->
+        <Label layoutX="20" layoutY="100" text="Select Athletes to Send Exercise:" />
+        <ScrollPane fx:id="athleteScrollPane" layoutX="20" layoutY="130" prefHeight="200" prefWidth="300">
+            <content>
+                <VBox fx:id="athleteVBox" spacing="10">
+                    <!-- Athletes will be dynamically added here -->
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <!-- Personal message section -->
+        <Label layoutX="350" layoutY="20" text="Add Personal Message:" />
+        <TextArea fx:id="messageTextArea" layoutX="350" layoutY="50" prefHeight="280" prefWidth="200" wrapText="true" />
+
+        <!-- Send Exercise and Cancel Buttons -->
+        <Button fx:id="sendButton" layoutX="20" layoutY="350" onAction="#sendExercise" text="Send Exercise" />
+        <Button fx:id="button_cancel" layoutX="190" layoutY="350" text="Cancel" />
+    </children>
+</AnchorPane>

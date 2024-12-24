@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.6" fx:controller="org.example.goalpromatt3.ScheduleController">
+    <children>
+        <!-- Header Buttons -->
+        <VBox layoutX="0.0" layoutY="0.0" prefWidth="600.0" spacing="10">
+            <AnchorPane prefHeight="63.0" prefWidth="600.0" style="-fx-background-color: #16c444;">
+                <children>
+                    <Button fx:id="button_logout" layoutX="525.0" layoutY="12.0" mnemonicParsing="false" text="Log out" />
+                    <Button fx:id="button_athletes" layoutX="401.0" layoutY="11.0" mnemonicParsing="false" text="Athletes" />
+                    <Button fx:id="button_schedules" layoutX="265.0" layoutY="11.0" mnemonicParsing="false" text="Schedules" />
+                    <Button fx:id="button_home" layoutX="20.0" layoutY="11.0" mnemonicParsing="false" text="Home" />
+                    <Button fx:id="button_exercises" layoutX="133.0" layoutY="11.0" mnemonicParsing="false" text="Exercises" />
+                </children>
+            </AnchorPane>
+
+            <!-- Navigation Buttons -->
+            <HBox alignment="CENTER" spacing="10" prefHeight="50.0">
+                <Button fx:id="previousMonthButton" text="Previous Month" />
+                <Label fx:id="monthLabel" text="Current Month" style="-fx-font-size: 16px;" />
+                <Button fx:id="nextMonthButton" text="Next Month" />
+            </HBox>
+
+            <!-- Calendar Grid -->
+            <GridPane fx:id="calendarGrid" prefWidth="600.0" prefHeight="300.0">
+                <columnConstraints>
+                    <!-- Seven columns for days of the week -->
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                    <ColumnConstraints prefWidth="85.71" />
+                </columnConstraints>
+                <rowConstraints>
+                    <!-- Rows for weeks -->
+                    <RowConstraints prefHeight="50.0" />
+                    <RowConstraints prefHeight="50.0" />
+                    <RowConstraints prefHeight="50.0" />
+                    <RowConstraints prefHeight="50.0" />
+                    <RowConstraints prefHeight="50.0" />
+                    <RowConstraints prefHeight="50.0" />
+                </rowConstraints>
+            </GridPane>
+
+            <!-- Add/Remove Buttons -->
+            <HBox alignment="CENTER" spacing="10" prefHeight="50.0">
+                <Button fx:id="addPracticeButton" text="Add Practice/Game" />
+                <Button fx:id="removePracticeButton" text="Remove Practice/Game" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

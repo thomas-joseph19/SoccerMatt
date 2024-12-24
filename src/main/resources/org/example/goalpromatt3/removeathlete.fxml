@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.goalpromatt3.removeAthleteController">
+   <children>
+      <TextField fx:id="tf_firstname" layoutX="322.0" layoutY="84.0" promptText="Athlete First Name" />
+      <TextField fx:id="tf_lastname" layoutX="322.0" layoutY="187.0" promptText="Athlete Last Name" />
+      <Label layoutX="149.0" layoutY="88.0" text="Athlete First Name" />
+      <Label layoutX="149.0" layoutY="191.0" text="Athlete Last Name" />
+      <Button fx:id="button_cancel" layoutX="149.0" layoutY="321.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="button_remove" layoutX="371.0" layoutY="321.0" mnemonicParsing="false" text="Remove" />
+   </children>
+</AnchorPane>
