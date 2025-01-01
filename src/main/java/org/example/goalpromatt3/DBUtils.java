@@ -85,8 +85,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            // Connect to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DBconnection();
 
             // Check if the username already exists
             psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -166,7 +165,7 @@ public class DBUtils {
 
         try {
             // Establish a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DBconnection();  // Use the returned connection
 
             // Prepare SQL statement to retrieve the password and CoachID associated with the entered username
             preparedStatement = connection.prepareStatement("SELECT password, user_id FROM users WHERE username = ?");
@@ -198,41 +197,26 @@ public class DBUtils {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
-            //Finally will close everything in regards to database
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-
     }
     //Edits user
     public static boolean editProfile(int coachID, String newFirstName, String newLastName, String newEmail) {
         String query = "UPDATE users SET firstname = COALESCE(?, firstname), " +
                 "lastname = COALESCE(?, lastname), email = COALESCE(?, email) " +
                 "WHERE user_id = ?";
+        Connection connection = null;
+        connection = DBconnection();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             // Set parameters, replacing null values with NULL in SQL
             ps.setString(1, (newFirstName != null && !newFirstName.isEmpty()) ? newFirstName : null);
@@ -255,8 +239,9 @@ public class DBUtils {
     public static void addGoaliebutton(ActionEvent event, String firstname, String lastname, String parentfirtname, String parentlastname, String email, int phonenumber, int catching, int punting, int reflexes, int age) {
         // Initialize database connection and prepared statements
         Connection connection = null;
-        PreparedStatement psInsert = null;
+        String sql = "INSERT INTO goalie (Coach_ID, reflexes, catching, punting, overall, firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         ResultSet resultSet = null;
+        PreparedStatement psInsert = null;
 
         //this gets the overall score (for sorting purposes)
         int overall = (reflexes + catching + punting) / 3;
@@ -268,12 +253,12 @@ public class DBUtils {
             // If no valid session is active, show an error message
             showAlert("Error", "You must be logged in to add an athlete", Alert.AlertType.ERROR);
         } else {
+            connection =  DBconnection();
             try {
                 // Connect to the database
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
 
                 // Prepare SQL statement to insert athlete data
-                psInsert = connection.prepareStatement("INSERT INTO goalie (Coach_ID, reflexes, catching, punting, overall, firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                psInsert = connection.prepareStatement(sql);
                 psInsert.setInt(1, CoachID);
                 psInsert.setInt(2, reflexes);
                 psInsert.setInt(3, catching);
@@ -319,8 +304,9 @@ public class DBUtils {
     public static void addAthletebutton(ActionEvent event, String firstname, String lastname, String parentfirtname, String parentlastname, String email, int phonenumber, int shooting, int passing, int dribbling, int age) {
         // Initialize database connection and prepared statements
         Connection connection = null;
-        PreparedStatement psInsert = null;
+        String sql = "INSERT INTO outfielder (Coach_ID, Passing, Shooting, dribbling, overall, firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         ResultSet resultSet = null;
+        PreparedStatement psInsert = null;
 
         //sets the overall socre for sorting purposes
         int overall = (passing + dribbling + shooting) / 3;
@@ -334,12 +320,11 @@ public class DBUtils {
             showAlert("Error", "An error occured while adding the athlete", Alert.AlertType.ERROR);
 
         } else {
-            try {
-                // Connect to the database
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DBconnection();
+            try{
 
                 // Prepare SQL statement to insert athlete data
-                psInsert = connection.prepareStatement("INSERT INTO outfielder (Coach_ID, Passing, Shooting, dribbling, overall, firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                psInsert = connection.prepareStatement(sql);
                 psInsert.setInt(1, CoachID);
                 psInsert.setInt(2, passing);
                 psInsert.setInt(3, shooting);
@@ -403,13 +388,6 @@ public class DBUtils {
     //Edits athletes
     public static void editPlayer(ActionEvent event, int athleteID, String firstname, String lastname, String parentfirtname, String parentlastname, String email, /* Using INTEGER so the data can be checked if null */Integer phonenumber, Integer skill1, Integer skill2, Integer skill3, Integer age) {
         Connection connection = null;
-        PreparedStatement psInsert = null;
-        ResultSet resultSet = null;
-
-        //sets the overall socre for sorting purposes
-        int overall = (skill1 + skill2 + skill3) / 3;
-
-
         // Retrieve CoachID from the active session
         int CoachID = SessionManager.getCurrentCoachID();  // Using the session manager to fetch the active CoachID
 
@@ -419,22 +397,16 @@ public class DBUtils {
 
 
         } else {
-            try {
-                // Connect to the database
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-                //checks if player is a goalie, so the correct skills can be edited
-
-                if(isGoalie(thefirstname, thelastname)){
-                    DBUtils.editGoalie(event, athleteID, firstname, lastname, parentfirtname, parentlastname, email, phonenumber, skill1, skill2, skill3, age);
-                } else if(!isGoalie(thefirstname, thelastname)) {
-                    DBUtils.editOutfielder(event, athleteID, firstname, lastname, parentfirtname, parentlastname, email, phonenumber, skill1, skill2, skill3, age);
+            connection = DBconnection();
+            //checks if player is a goalie, so the correct skills can be edited
+            if(isGoalie(thefirstname, thelastname)){
+                DBUtils.editGoalie(event, athleteID, firstname, lastname, parentfirtname, parentlastname, email, phonenumber, skill1, skill2, skill3, age);
+            } else if(!isGoalie(thefirstname, thelastname)) {
+                DBUtils.editOutfielder(event, athleteID, firstname, lastname, parentfirtname, parentlastname, email, phonenumber, skill1, skill2, skill3, age);
 
 
-                }
-
-            } catch (SQLException e){
-                e.printStackTrace();
             }
+
         }
     }
     // Method to remove athlete from the database by first and last name
@@ -443,16 +415,15 @@ public class DBUtils {
         if(doesAthleteExist(currentCoachID, firstName, lastName)) {
             String deleteGoalieQuery = "DELETE FROM goalie WHERE firstName = ? AND lastName = ?";
             String deleteOutfielderQuery = "DELETE FROM outfielder WHERE firstName = ? AND lastName = ?";
-
+            PreparedStatement pstmt = null;
             // Establish connection and execute the SQL delete queries
             Connection connection = null;
-            PreparedStatement pstmt = null;
-            try {
-                // Establish the connection to the database
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+
+            connection = DBconnection();
+            try{
 
                 // First, try to delete from the goalie table
-                pstmt = connection.prepareStatement(deleteGoalieQuery);
+                pstmt  = connection.prepareStatement(deleteGoalieQuery);
                 pstmt.setString(1, firstName);
                 pstmt.setString(2, lastName);
                 int rowsAffected = pstmt.executeUpdate();
@@ -492,21 +463,20 @@ public class DBUtils {
     public static void editGoalie(ActionEvent event, int athleteId, String newFirstName, String newLastName, String newParentFirstName, String newParentLastName, String newEmail, Integer newPhoneNumber, /* Using INTEGER so the data can be checked if null */ Integer newReflexes, Integer newCatching, Integer newPunting, Integer newAge) {
 
         Connection connection = null;
-        PreparedStatement psQuery = null;
+        String selectQuery = "SELECT firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone, reflexes, catching, punting, overall FROM goalie WHERE goalie_ID = ?";
+
         PreparedStatement psUpdate = null;
         ResultSet resultSet = null;
+        PreparedStatement psQuery = null;
         int overall = (newCatching + newReflexes + newPunting)/3;
         int specificID = SessionManager.getSpecificID(thefirstname, thelastname);
         System.out.println("Specific ID: " + specificID);
-
+        connection = DBconnection();
 
         try {
-            // Establish a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-
             // First, retrieve the current values for the goalie
 
-            String selectQuery = "SELECT firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone, reflexes, catching, punting, overall FROM goalie WHERE goalie_ID = ?";
+
             psQuery = connection.prepareStatement(selectQuery);
             psQuery.setInt(1, specificID);
             resultSet = psQuery.executeQuery();
@@ -566,21 +536,20 @@ public class DBUtils {
     public static void editOutfielder(ActionEvent event, int athleteId, String newFirstName, String newLastName, String newParentFirstName, String newParentLastName, String newEmail, Integer newPhoneNumber, Integer newShooting, Integer newDribbling, Integer newPassing, Integer newAge) {
 
         Connection connection = null;
-        PreparedStatement psQuery = null;
+        String selectQuery= "SELECT firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone, shooting, dribbling, passing, overall FROM outfielder WHERE outfielder_ID = ?";
         PreparedStatement psUpdate = null;
+        PreparedStatement psQuery = null;
         ResultSet resultSet = null;
         int overall = (newShooting + newPassing + newDribbling)/3;
         int specificID = SessionManager.getSpecificID(thefirstname, thelastname);
         System.out.println("Specific ID: " + specificID);
+        connection = DBconnection();
+
+        try{
 
 
-        try {
-            // Establish a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-
-            // First, retrieve the current values for the goalie
-            String selectQuery= "SELECT firstname, lastname, age, parentfirstname, parentlastname, parentemail, parentphone, shooting, dribbling, passing, overall FROM outfielder WHERE outfielder_ID = ?";
             psQuery = connection.prepareStatement(selectQuery);
+            // First, retrieve the current values for the goalie
             psQuery.setInt(1, specificID);
             resultSet = psQuery.executeQuery();
 
@@ -636,18 +605,17 @@ public class DBUtils {
         }
     }
     // Method to retrieve the athlete ID based on first and last name
-    public static Integer getAthleteID(String firstName, String lastName) {
+    public static Integer getAthleteID(String firstName, String lastName){
+        String query = "SELECT athlete_id FROM combined_athletes WHERE firstname = ? AND lastname = ?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Integer athleteId = null;
+        connection = DBconnection();
 
-        try {
-            // Establish a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+        try{
 
-            // SQL query to retrieve athlete_id based on first and last name
-            String query = "SELECT athlete_id FROM combined_athletes WHERE firstname = ? AND lastname = ?";
+            // SQL query to retrieve athlete_id based on first and last nam
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
@@ -680,15 +648,16 @@ public class DBUtils {
     //Gets the coach_ID so the foreign key is properly set up in the SQL database
 // Method to get Coach_ID and store current user's credentials
     public static int getCoachID(String username, String password) {
+        String sql = "SELECT Coach_ID FROM users WHERE username = ? AND password = ?";
         Connection connection = null;
-        PreparedStatement psQuery = null;
         ResultSet resultSet = null;
+        PreparedStatement psQuery = null;
         int coachID = -1;
+        connection = DBconnection();
+        try{
 
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
 
-            psQuery = connection.prepareStatement("SELECT Coach_ID FROM users WHERE username = ? AND password = ?");
+            psQuery = connection.prepareStatement(sql);
             psQuery.setString(1, username);
             psQuery.setString(2, password);
 
@@ -717,17 +686,17 @@ public class DBUtils {
     }
     // Method to check if an athlete is a goalie, given their first and last name
     public static boolean isGoalie(String firstname, String lastname) {
-        Connection connection = null;
-        PreparedStatement psQuery = null;
+        String sql = "SELECT athlete_type FROM combined_athletes WHERE firstname = ? AND lastname = ?";
         ResultSet resultSet = null;
         boolean isGoalie = false;
-
-        try {
+        Connection connection = null;
+        PreparedStatement psQuery = null;
+        connection = DBconnection();
+        try{
             // Establish a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+
 
             // Query to check the athlete type based on first and last name
-            String sql = "SELECT athlete_type FROM combined_athletes WHERE firstname = ? AND lastname = ?";
             psQuery = connection.prepareStatement(sql);
             psQuery.setString(1, firstname);
             psQuery.setString(2, lastname);
@@ -781,11 +750,8 @@ public class DBUtils {
         // Establish connection and execute the SQL delete query
         Connection connection = null;
         PreparedStatement pstmt = null;
-        try {
-            // Establish the connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-
-            // Prepare the DELETE statement
+        connection = DBconnection();
+        try{
             pstmt = connection.prepareStatement(deleteExerciseQuery);
             pstmt.setString(1, exerciseName);  // Set the exercise name parameter
 
@@ -794,29 +760,19 @@ public class DBUtils {
 
             // Show success message if the exercise was removed
             if (rowsAffected > 0) {
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Success");
-                successAlert.setHeaderText("Exercise Removed");
-                successAlert.setContentText("The exercise '" + exerciseName + "' was successfully removed.");
-                successAlert.showAndWait();  // Display the success alert
+                showAlert("Success", "Exercise removed", Alert.AlertType.INFORMATION);
+
             } else {
                 // Show warning message if no rows were affected (exercise not found)
-                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
-                warningAlert.setTitle("Not Found");
-                warningAlert.setHeaderText("Exercise Not Found");
-                warningAlert.setContentText("No exercise found with the name '" + exerciseName + "'.");
-                warningAlert.showAndWait();  // Display the warning alert
+                showAlert("Not Found", "Exercise Not Found", Alert.AlertType.WARNING);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();  // Log the exception or handle it appropriately
 
             // Show error alert if there is an SQL exception
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Database Error");
-            errorAlert.setHeaderText("Error");
-            errorAlert.setContentText("An error occurred while trying to remove the exercise.");
-            errorAlert.showAndWait();  // Display the error alert
+            showAlert("Error", "An error occured while trying to remove the exercise", Alert.AlertType.ERROR);
+
         } finally {
             // Ensure the PreparedStatement and connection are closed to avoid resource leaks
             try {
@@ -835,9 +791,9 @@ public class DBUtils {
     public static void addExercise(int coachId, String exerciseName, String exerciseLink, int difficulty) {
         String query = "INSERT INTO exercises (coach_id, exercise_name, exercise_link, difficulty) VALUES (?, ?, ?, ?)";
         String validationQuery = "SELECT user_id FROM users WHERE user_id = ?";
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement validationPs = connection.prepareStatement(validationQuery)) {
+        Connection connection = null;
+        connection = DBconnection();
+        try (PreparedStatement validationPs = connection.prepareStatement(validationQuery)) {
 
             // Validate coachId
             validationPs.setInt(1, coachId);
@@ -870,9 +826,9 @@ public class DBUtils {
     // Method to add a schedule to both the database and the currentCoachSchedule ArrayList
     public static void addSchedule(int coachID, String date, boolean isPractice, boolean isGame, String startTime, String endTime) {
         String query = "INSERT INTO schedules (coach_id, date, practice, game, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+        Connection connection = null;
+        connection = DBconnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, coachID);
             pstmt.setString(2, date);
@@ -892,9 +848,10 @@ public class DBUtils {
     }
     public static void removeScheduleFromDatabase(Schedule schedule) {
         String query = "DELETE FROM schedules WHERE coach_id = ? AND date = ?";
+        Connection connection = null;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+        connection = DBconnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, schedule.getCoachID());
             pstmt.setString(2, schedule.getDate());
@@ -907,27 +864,28 @@ public class DBUtils {
 
 
 
-   //ALL METHODS RELATING TO SENDING EXERCISES
-   //This receives the athlete's email
-   public static String getAthleteEmail(int athleteId) {
-       String email = null;
-       String selectQuery = "SELECT parentemail FROM combined_athletes WHERE athlete_id = ?";
+    //ALL METHODS RELATING TO SENDING EXERCISES
+    //This receives the athlete's email
+    public static String getAthleteEmail(int athleteId) throws SQLException {
+        String email = null;
+        String selectQuery = "SELECT parentemail FROM combined_athletes WHERE athlete_id = ?";
+        Connection connection = null;
 
-       try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-            PreparedStatement ps = connection.prepareStatement(selectQuery)) {
+        connection = DBconnection();
+        try (PreparedStatement ps = connection.prepareStatement(selectQuery)) {
 
-           ps.setInt(1, athleteId);
-           ResultSet rs = ps.executeQuery();
-           if (rs.next()) {
-               email = rs.getString("parentemail");
-           }
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
-       return email;
-   }
+            ps.setInt(1, athleteId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("parentemail");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
+    }
     // Method to send an email to an athlete with an exercise
-    public static void sendExerciseEmail(int coachID, int athleteId, String exerciseName, String message) {
+    public static void sendExerciseEmail(int coachID, int athleteId, String exerciseName, String message) throws SQLException {
         // Get the athlete's email
         System.out.println("Processing athlete ID: " + athleteId);
 
@@ -1008,32 +966,32 @@ public class DBUtils {
 
 
 
-   //ALL SORTING METHODS
-   //Sorting Algorithms
-   //Sorts athletes by skill level
-   public static void selectionSortBySkill(ObservableList<Athlete> athletes) {
-       int n = athletes.size();
+    //ALL SORTING METHODS
+    //Sorting Algorithms
+    //Sorts athletes by skill level
+    public static void selectionSortBySkill(ObservableList<Athlete> athletes) {
+        int n = athletes.size();
 
-       // Perform selection sort on the list of athletes
-       for (int i = 0; i < n - 1; i++) {
-           // Assume the current index is the minimum
-           int minIndex = i;
+        // Perform selection sort on the list of athletes
+        for (int i = 0; i < n - 1; i++) {
+            // Assume the current index is the minimum
+            int minIndex = i;
 
-           // Find the smallest skill level in the remaining unsorted portion
-           for (int j = i + 1; j < n; j++) {
-               if (athletes.get(j).getSkill() < athletes.get(minIndex).getSkill()) {
-                   minIndex = j;
-               }
-           }
+            // Find the smallest skill level in the remaining unsorted portion
+            for (int j = i + 1; j < n; j++) {
+                if (athletes.get(j).getSkill() < athletes.get(minIndex).getSkill()) {
+                    minIndex = j;
+                }
+            }
 
-           // Swap the found minimum skill element with the element at the current index
-           if (minIndex != i) {
-               Athlete temp = athletes.get(i);
-               athletes.set(i, athletes.get(minIndex));
-               athletes.set(minIndex, temp);
-           }
-       }
-   }
+            // Swap the found minimum skill element with the element at the current index
+            if (minIndex != i) {
+                Athlete temp = athletes.get(i);
+                athletes.set(i, athletes.get(minIndex));
+                athletes.set(minIndex, temp);
+            }
+        }
+    }
     public static void bubbleSortByLastName(ObservableList<Athlete> athleteList) {
         int n = athleteList.size();
 
@@ -1096,7 +1054,7 @@ public class DBUtils {
         mergeSortExercisesBySkillLevel(exercises, 0, exercises.size() - 1);
         return exercises; // Return the sorted list
     }
-    
+
 
     //VALIDATION EMAILS + MISC
     //Validates if a given email is actually an email
@@ -1111,10 +1069,10 @@ public class DBUtils {
             if(array[i] == null){
                 array[i] = 15;
             }
-        if (array[i] < 0 || array[i] > 100){
-                    return false;
-                }
+            if (array[i] < 0 || array[i] > 100){
+                return false;
             }
+        }
 
         return true;
 
@@ -1127,7 +1085,19 @@ public class DBUtils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+    public static Connection DBconnection() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
     }
+}
+
 
 
 
