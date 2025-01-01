@@ -5,6 +5,7 @@ module org.example.goalpromatt3 {
     requires org.jetbrains.annotations;
     requires java.mail;
     requires javafx.graphics;
+    requires java.desktop;
 
 
     opens org.example.goalpromatt3 to javafx.fxml;

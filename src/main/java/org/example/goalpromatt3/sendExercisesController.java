@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.AlertType;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class sendExercisesController {
     }
 
     @FXML
-    private void sendExercise(ActionEvent event) {
+    private void sendExercise(ActionEvent event) throws SQLException {
         String selectedExercise = exerciseComboBox.getValue();
         String personalMessage = messageTextArea.getText();
         int coachID = SessionManager.getCurrentCoachID();
