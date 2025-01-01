@@ -32,18 +32,15 @@ public class SessionManager {
         // SQL query to retrieve the coach's email from the users table
         String query = "SELECT email FROM users WHERE user_id = ?";
 
-        // Database connection details
-        String url = "jdbc:mysql://localhost/goalproschema";
-        String username = "root";
-        String password = "GuitarandCelloguy7083";
+
 
         Connection connection = null;
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
-
+        connection = DBUtils.DBconnection();
         try {
             // Establish connection to the database
-            connection = DriverManager.getConnection(url, username, password);
+
 
             // Prepare the SQL statement with the coach's ID
             pstmt = connection.prepareStatement(query);
@@ -90,9 +87,9 @@ public class SessionManager {
     public static ArrayList<Exercise> fetchCoachExercises(int coachID) {
         ArrayList<Exercise> exercises = new ArrayList<>(); // Initialize the list to hold Exercise objects
         String query = "SELECT exercise_name, difficulty, exercise_link FROM exercises WHERE coach_id = ?"; // Assuming 'exercise_link' exists in the database
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        Connection connection = null;
+        connection = DBUtils.DBconnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setInt(1, coachID);  // Set the coach ID parameter
             ResultSet rs = ps.executeQuery();  // Execute the query
@@ -119,9 +116,9 @@ public class SessionManager {
         ArrayList<Schedule> schedule = new ArrayList<Schedule>();
         // Updated query to also retrieve startTime and endTime
         String query = "SELECT date, start_time, end_time, practice, game FROM schedules WHERE coach_id = ?";
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+        Connection connection = null;
+        connection = DBUtils.DBconnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, CoachID); // Use the passed-in CoachID
             ResultSet resultSet = pstmt.executeQuery();
@@ -149,9 +146,9 @@ public class SessionManager {
     public static ArrayList<Athlete> loadAthletesForCoach(int coachID) {
         ArrayList<Athlete> athletesList = new ArrayList<>();
         String query = "SELECT firstname, lastname, overall, parentfirstname, parentlastname, parentemail, parentphone, athlete_id, athlete_type FROM combined_athletes WHERE coach_id = ?";
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        Connection connection = null;
+        connection = DBUtils.DBconnection();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setInt(1, coachID); // Set the coach ID parameter
             ResultSet rs = ps.executeQuery();  // Execute the query
@@ -189,8 +186,7 @@ public class SessionManager {
         int athleteId = -1; // Default value if no ID is found
 
         try {
-            // Connect to the database
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DBUtils.DBconnection();
 
             // Query to check the goalies table
             String queryGoalie = "SELECT goalie_ID FROM goalie WHERE firstname = ? AND lastname = ?";
