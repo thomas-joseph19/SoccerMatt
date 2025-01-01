@@ -16,6 +16,7 @@ public class GoalProRunner extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+        System.out.println("Hi");
     }
 
     public static void main(String[] args) {
