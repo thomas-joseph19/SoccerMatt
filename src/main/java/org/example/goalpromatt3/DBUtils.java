@@ -1090,7 +1090,7 @@ public class DBUtils {
     public static Connection DBconnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "Password");
         } catch (SQLException e) {
             e.printStackTrace();
         }
