@@ -929,7 +929,7 @@ public class DBUtils {
 
         // Email configurations
         String fromEmail = SessionManager.getCoachEmailByID(coachID); // Your email address
-        String password = "rixp qmqs ehty zvuo";     // Your email password
+        String password = "password";     // Your email password
 
         // Set the SMTP server properties
         Properties properties = new Properties();
@@ -1090,7 +1090,7 @@ public class DBUtils {
     public static Connection DBconnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "Password");
         } catch (SQLException e) {
             e.printStackTrace();
         }
