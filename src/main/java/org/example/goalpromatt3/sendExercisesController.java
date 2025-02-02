@@ -97,7 +97,7 @@ public class sendExercisesController {
             DBUtils.sendExerciseEmail(coachID, athleteID, selectedExercise, personalMessage);
         }
 
-        DBUtils.showAlert("Success", "Emails sent successfully to selected athletes.", AlertType.INFORMATION);
+
         DBUtils.changeScene(event, "Logged-In.fxml", "Hello", null);
     }
 

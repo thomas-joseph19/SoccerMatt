@@ -957,9 +957,11 @@ public class DBUtils {
             // Send the email
             Transport.send(msg);
             System.out.println("Email sent successfully to " + athleteEmail);
+            DBUtils.showAlert("Success", "Emails sent successfully to selected athletes.", Alert.AlertType.INFORMATION);
         } catch (MessagingException e) {
             e.printStackTrace();
             System.out.println("Failed to send email.");
+            DBUtils.showAlert("Failure", "Email was not sent.", Alert.AlertType.WARNING);
         }
     }
 
@@ -1055,7 +1057,6 @@ public class DBUtils {
         return exercises; // Return the sorted list
     }
 
-
     //VALIDATION EMAILS + MISC
     //Validates if a given email is actually an email
     public static boolean isValidEmail(String email) {
@@ -1086,11 +1087,10 @@ public class DBUtils {
         alert.showAndWait();
     }
 
-
     public static Connection DBconnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "Password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/goalproschema", "root", "GuitarandCelloguy7083");
         } catch (SQLException e) {
             e.printStackTrace();
         }
